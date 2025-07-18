@@ -2,23 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:name=".DailyWisdomApp"
+        android:name=".DailyQuotesApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DailyWisdom">
+        android:theme="@style/Theme.DailyQuotes">
 
-        <!-- AdMob app ID (2025 version) -->
+        <!-- Test AdMob app ID for development -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3459996192536925~3161867849"/>
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
 
         <activity
             android:name=".SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.DailyWisdom.Splash">
+            android:theme="@style/Theme.DailyQuotes.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,37 +28,37 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:theme="@style/Theme.DailyWisdom.NoActionBar" />
+            android:theme="@style/Theme.DailyQuotes.NoActionBar" />
         
         <activity
             android:name=".FavoritesActivity"
             android:exported="false"
-            android:theme="@style/Theme.DailyWisdom.NoActionBar" />
+            android:theme="@style/Theme.DailyQuotes.NoActionBar" />
             
         <activity
             android:name=".QuoteOfDayActivity"
             android:exported="false"
-            android:theme="@style/Theme.DailyWisdom.NoActionBar" />
+            android:theme="@style/Theme.DailyQuotes.NoActionBar" />
             
         <activity
             android:name=".ImportQuotesActivity"
             android:exported="false"
-            android:theme="@style/Theme.DailyWisdom.NoActionBar" />
+            android:theme="@style/Theme.DailyQuotes.NoActionBar" />
             
         <activity
             android:name=".util.QuoteCountActivity"
             android:exported="false"
-            android:theme="@style/Theme.DailyWisdom" />
+            android:theme="@style/Theme.DailyQuotes" />
             
         <activity
             android:name=".CategoriesActivity"
             android:exported="false"
-            android:theme="@style/Theme.DailyWisdom.NoActionBar" />
+            android:theme="@style/Theme.DailyQuotes.NoActionBar" />
             
         <activity
             android:name=".CategoryQuotesActivity"
             android:exported="false"
-            android:theme="@style/Theme.DailyWisdom.NoActionBar" />
+            android:theme="@style/Theme.DailyQuotes.NoActionBar" />
             
         <receiver
             android:name=".notification.NotificationReceiver"

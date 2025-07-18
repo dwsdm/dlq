@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Daily Wisdom</string>
+    <string name="app_name">Daily Quotes</string>
     <string name="quote_of_day">Quote of the Day</string>
     <string name="favorites">Favorites</string>
     <string name="new_quote">New Quote</string>
