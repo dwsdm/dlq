@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity(), AdManager.RewardAdListener {
     private var refreshCount = 0  // Track refresh button clicks for showing ads
     private var favoriteCount = 0  // Track favorite actions for showing ads
     
-    private lateinit var bottomNavigation: com.google.android.material.bottomnavigation.BottomNavigationView
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +46,6 @@ class MainActivity : AppCompatActivity(), AdManager.RewardAdListener {
         adManager.loadRewardedAd()
         
         // Setup UI
-        setupBottomNavigation()
         setupButtons()
         observeViewModel()
         
@@ -57,32 +55,7 @@ class MainActivity : AppCompatActivity(), AdManager.RewardAdListener {
         }
     }
     
-    private fun setupBottomNavigation() {
-        // Find the BottomNavigationView in the window decor view since it's not in our main layout anymore
-        bottomNavigation = window.decorView.findViewById(R.id.bottom_navigation)
-        
-        // Explicitly set the selected item to home
-        bottomNavigation.selectedItemId = R.id.navigation_home
-        
-        bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    // Already on home
-                    true
-                }
-                R.id.navigation_daily -> {
-                    NavigationHelper.navigateTo(this, QuoteOfDayActivity::class.java)
-                    true
-                }
-                R.id.navigation_favorites -> {
-                    NavigationHelper.navigateTo(this, FavoritesActivity::class.java)
-                    true
-                }
-                else -> false
-            }
-        }
-    }
-    
+
     private fun setupButtons() {
         // Initialize buttons using view binding
         val refreshButton = binding.root.findViewById<com.google.android.material.button.MaterialButton>(R.id.refreshButton)
@@ -201,13 +174,9 @@ class MainActivity : AppCompatActivity(), AdManager.RewardAdListener {
         }
     }
     
-    // Handle back button to properly navigate bottom navigation
+    // Handle back button
     override fun onBackPressed() {
-        if (bottomNavigation.selectedItemId != R.id.navigation_home) {
-            bottomNavigation.selectedItemId = R.id.navigation_home
-        } else {
-            super.onBackPressed()
-        }
+        super.onBackPressed()
     }
     
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
