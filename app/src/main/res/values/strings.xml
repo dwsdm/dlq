@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Daily Wisdom</string>
+    <string name="quote_of_day">Quote of the Day</string>
+    <string name="favorites">Favorites</string>
+    <string name="new_quote">New Quote</string>
+    <string name="copy_quote">Copy to Clipboard</string>
+    <string name="add_to_favorites">Add to Favorites</string>
+    <string name="remove_from_favorites">Remove from Favorites</string>
+    <string name="notifications_enabled">Daily notifications enabled</string>
+    <string name="notifications_disabled">Daily notifications disabled</string>
+    <string name="quote_copied">Quote copied to clipboard</string>
+    <string name="search_quotes">Search quotes</string>
+    <string name="no_favorites">No favorites yet</string>
+    <string name="no_search_results">No quotes found matching your search</string>
+    <string name="load_more">Load More</string>
+    <string name="notification_title">Daily Wisdom</string>
+    <string name="notification_channel_name">Daily Quotes</string>
+    <string name="notification_channel_description">Daily inspirational quotes</string>
+    <string name="enable_notifications">Enable Notifications</string>
+    <string name="app_tagline">Inspiration for your journey</string>
+    
+    <!-- Import quotes strings -->
+    <string name="import_quotes">Import Quotes</string>
+    <string name="import_quotes_title">Import 5,000+ Quotes</string>
+    <string name="import_quotes_description">Import over 5,000 inspirational quotes from various categories to enhance your Daily Wisdom experience. This process may take a few minutes.</string>
+    <string name="start_import">Start Import</string>
+    <string name="preparing_import">Preparing to import quotes…</string>
+    <string name="importing_quotes">Importing quotes: %1$d/%2$d</string>
+    <string name="import_complete">Successfully imported %1$d quotes!</string>
+    <string name="import_error">Error importing quotes: %1$s</string>
+    <string name="retry">Retry</string>
+    <string name="done">Done</string>
+    
+    <!-- Category features strings -->
+    <string name="categories">Categories</string>
+    <string name="no_quotes_in_category">No quotes found in this category</string>
+    <string name="browse_by_category">Browse by Category</string>
+</resources>

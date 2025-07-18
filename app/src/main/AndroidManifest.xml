@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:name=".DailyWisdomApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.DailyWisdom">
+
+        <!-- AdMob app ID (2025 version) -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3459996192536925~3161867849"/>
+
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.DailyWisdom.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DailyWisdom.NoActionBar" />
+        
+        <activity
+            android:name=".FavoritesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DailyWisdom.NoActionBar" />
+            
+        <activity
+            android:name=".QuoteOfDayActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DailyWisdom.NoActionBar" />
+            
+        <activity
+            android:name=".ImportQuotesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DailyWisdom.NoActionBar" />
+            
+        <activity
+            android:name=".util.QuoteCountActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DailyWisdom" />
+            
+        <activity
+            android:name=".CategoriesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DailyWisdom.NoActionBar" />
+            
+        <activity
+            android:name=".CategoryQuotesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DailyWisdom.NoActionBar" />
+            
+        <receiver
+            android:name=".notification.NotificationReceiver"
+            android:exported="false" />
+            
+        <receiver
+            android:name=".notification.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+</manifest>
