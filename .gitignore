@@ -85,3 +85,4 @@ fastlane/readme.md
 *.jsbundle
 
 # Add project specific ignore rules here
+.env
