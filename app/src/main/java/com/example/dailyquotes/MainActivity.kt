@@ -27,11 +27,12 @@ class MainActivity : AppCompatActivity(), AdManager.RewardAdListener {
     private var refreshCount = 0  // Track refresh button clicks for showing ads
     private var favoriteCount = 0  // Track favorite actions for showing ads
     
+    private lateinit var bottomNavigation: com.google.android.material.bottomnavigation.BottomNavigationView
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
         
         // Initialize ViewModel
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
@@ -39,7 +40,10 @@ class MainActivity : AppCompatActivity(), AdManager.RewardAdListener {
         // Initialize AdManager
         adManager = AdManager.getInstance(this)
         adManager.setRewardAdListener(this)
-        adManager.loadBannerAd(binding.adViewContainer)
+        
+        // Banner ad will be shown in a different way since we removed adViewContainer
+        // Consider adding a banner ad view back to the layout or handle it differently
+        
         adManager.loadRewardedAd()
         
         // Setup UI
@@ -54,10 +58,13 @@ class MainActivity : AppCompatActivity(), AdManager.RewardAdListener {
     }
     
     private fun setupBottomNavigation() {
-        // Explicitly set the selected item to home
-        binding.bottomNavigation.selectedItemId = R.id.navigation_home
+        // Find the BottomNavigationView in the window decor view since it's not in our main layout anymore
+        bottomNavigation = window.decorView.findViewById(R.id.bottom_navigation)
         
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
+        // Explicitly set the selected item to home
+        bottomNavigation.selectedItemId = R.id.navigation_home
+        
+        bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
                     // Already on home
@@ -77,7 +84,12 @@ class MainActivity : AppCompatActivity(), AdManager.RewardAdListener {
     }
     
     private fun setupButtons() {
-        binding.refreshButton.setOnClickListener {
+        // Initialize buttons using view binding
+        val refreshButton = binding.root.findViewById<com.google.android.material.button.MaterialButton>(R.id.refreshButton)
+        val favoriteButton = binding.root.findViewById<com.google.android.material.button.MaterialButton>(R.id.favoriteButton)
+        val copyButton = binding.root.findViewById<com.google.android.material.button.MaterialButton>(R.id.copyButton)
+        
+        refreshButton.setOnClickListener {
             viewModel.getRandomQuote()
             
             // Increment refresh count and show rewarded ad every 4 refreshes
@@ -90,7 +102,7 @@ class MainActivity : AppCompatActivity(), AdManager.RewardAdListener {
             }
         }
         
-        binding.favoriteButton.setOnClickListener {
+        favoriteButton.setOnClickListener {
             viewModel.currentQuote.value?.let { quote ->
                 // Toggle favorite status
                 val newFavoriteStatus = !quote.isFavorite
@@ -125,8 +137,10 @@ class MainActivity : AppCompatActivity(), AdManager.RewardAdListener {
             }
         }
         
-        binding.copyButton.setOnClickListener {
-            copyQuoteToClipboard()
+        copyButton.setOnClickListener {
+            viewModel.currentQuote.value?.let { quote ->
+                copyToClipboard(quote.text, quote.author)
+            }
         }
     }
     
@@ -158,37 +172,19 @@ class MainActivity : AppCompatActivity(), AdManager.RewardAdListener {
     }
     
     private fun updateFavoriteButton(isFavorite: Boolean) {
-        // For MaterialButton, we need to change both the icon and tint
-        if (isFavorite) {
-            // Use filled heart icon with red tint
-            binding.favoriteButton.setIconResource(R.drawable.ic_heart_filled)
-            binding.favoriteButton.setIconTint(android.content.res.ColorStateList.valueOf(
-                resources.getColor(R.color.accent_secondary, theme)
-            ))
-            binding.favoriteButton.backgroundTintList = android.content.res.ColorStateList.valueOf(
-                resources.getColor(R.color.primary_light, theme)
-            )
-        } else {
-            // Use outline heart icon with white tint
-            binding.favoriteButton.setIconResource(R.drawable.ic_heart)
-            binding.favoriteButton.setIconTint(android.content.res.ColorStateList.valueOf(
-                resources.getColor(R.color.white, theme)
-            ))
-            binding.favoriteButton.backgroundTintList = android.content.res.ColorStateList.valueOf(
-                resources.getColor(R.color.primary_light, theme)
-            )
-        }
+        val favoriteButton = binding.root.findViewById<com.google.android.material.button.MaterialButton>(R.id.favoriteButton)
+        favoriteButton.setIconResource(
+            if (isFavorite) R.drawable.ic_heart_filled else R.drawable.ic_heart
+        )
     }
     
-    private fun copyQuoteToClipboard() {
-        viewModel.currentQuote.value?.let { quote ->
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val quoteText = "${quote.text}\n— ${quote.author}"
-            val clip = ClipData.newPlainText("Quote", quoteText)
-            clipboard.setPrimaryClip(clip)
-            
-            Toast.makeText(this, R.string.quote_copied, Toast.LENGTH_SHORT).show()
-        }
+    private fun copyToClipboard(text: String, author: String) {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val quoteText = "$text\n— $author"
+        val clip = ClipData.newPlainText("Quote", quoteText)
+        clipboard.setPrimaryClip(clip)
+        
+        Toast.makeText(this, R.string.quote_copied, Toast.LENGTH_SHORT).show()
     }
     
     /**
@@ -199,8 +195,18 @@ class MainActivity : AppCompatActivity(), AdManager.RewardAdListener {
         if (adManager.isRewardedAdReady()) {
             adManager.showRewardedAd(this)
         } else {
-            adManager.loadRewardedAd()
-            Log.d("MainActivity", "Rewarded ad not ready, loading a new one")
+            // If ad is not ready, just log and continue
+            Log.d("MainActivity", "Rewarded ad is not ready yet")
+            adManager.loadRewardedAd() // Load the next ad
+        }
+    }
+    
+    // Handle back button to properly navigate bottom navigation
+    override fun onBackPressed() {
+        if (bottomNavigation.selectedItemId != R.id.navigation_home) {
+            bottomNavigation.selectedItemId = R.id.navigation_home
+        } else {
+            super.onBackPressed()
         }
     }
     
